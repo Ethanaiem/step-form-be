@@ -56,7 +56,9 @@ app.post("/form", async (request, response) => {
       request.body.business_zip,
       request.body.business_entity,
       request.body.business_start_date,
-      request.body.use_of_loan
+      request.body.use_of_loan,
+      request.body.annual_revenue,
+      request.body.business_ein
    );
    let results = await envelopesApi.createEnvelope(
       process.env.ACCOUNT_ID, { envelopeDefinition: envelope });
@@ -80,7 +82,7 @@ function getEnvelopesApi(request) {
    return new docusign.EnvelopesApi(dsApiClient);
 }
 
-function makeEnvelope(owner_one_name, owner_one_email, company_name, loan_amount, owner_one_contact, owner_one_dob, owner_one_ssn, owner_one_percentage, owner_one_address, owner_one_city, owner_one_state, owner_one_zip, owner_one_cs, owner_two_name, owner_two_email, owner_two_contact, owner_two_dob, owner_two_ssn, owner_two_percentage, owner_two_address, owner_two_city, owner_two_state, owner_two_zip, owner_two_cs, business_address, business_city, business_state, business_zip, business_entity, use_of_loan, business_start_date) {
+function makeEnvelope(owner_one_name, owner_one_email, company_name, loan_amount, owner_one_contact, owner_one_dob, owner_one_ssn, owner_one_percentage, owner_one_address, owner_one_city, owner_one_state, owner_one_zip, owner_one_cs, owner_two_name, owner_two_email, owner_two_contact, owner_two_dob, owner_two_ssn, owner_two_percentage, owner_two_address, owner_two_city, owner_two_state, owner_two_zip, owner_two_cs, business_address, business_city, business_state, business_zip, business_entity, business_start_date ,use_of_loan, annual_revenue, business_ein) {
    let env = new docusign.EnvelopeDefinition();
    env.templateId = process.env.TEMPLATE_ID;
 
@@ -120,6 +122,8 @@ function makeEnvelope(owner_one_name, owner_one_email, company_name, loan_amount
    let useOfLoanTab = docusign.Text.constructFromObject({ tabLabel: "use_of_loan", value: use_of_loan });
    let companyNameTab = docusign.Text.constructFromObject({ tabLabel: "company_name", value: company_name });
    let loanAmountTab = docusign.Text.constructFromObject({ tabLabel: "loan_amount", value: loan_amount });
+   let annualRevenueTab = docusign.Text.constructFromObject({ tabLabel: "annual_revenue", value: annual_revenue });
+   let businessEinTab = docusign.Text.constructFromObject({ tabLabel: "business_ein", value: business_ein });
 
    // Assemble all tabs into one Tabs object
    let tabs = docusign.Tabs.constructFromObject({
@@ -128,7 +132,7 @@ function makeEnvelope(owner_one_name, owner_one_email, company_name, loan_amount
          ownerOneCityTab, ownerOneStateTab, ownerOneZipTab, ownerOneCsTab, ownerTwoNameTab, ownerTwoEmailTab, ownerTwoContactTab,
          ownerTwoDobTab, ownerTwoSsnTab, ownerTwoPercTab, ownerTwoAddressTab, ownerTwoCityTab, ownerTwoStateTab, ownerTwoZipTab,
          ownerTwoCsTab, businessAddressTab, businessCityTab, businessStateTab, businessZipTab, businessEntityTab, useOfLoanTab,
-         companyNameTab, loanAmountTab, businessDateTab
+         companyNameTab, loanAmountTab, businessDateTab, annualRevenueTab, businessEinTab
       ]
    });
 
