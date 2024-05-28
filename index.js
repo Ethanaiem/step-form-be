@@ -158,7 +158,7 @@ function makeRecipientViewRequest(name, email) {
    let viewRequest = new docusign.RecipientViewRequest();
 
    // viewRequest.returnUrl = "http://localhost:5173/"; // Your React app's success URL
-   viewRequest.returnUrl = "https://klendify.webflow.io/pre-qualification-form"; // Your React app's success URL
+   viewRequest.returnUrl = "https://www.klendify.com/application-submitted"; // Your React app's success URL
    viewRequest.authenticationMethod = 'none';
 
    viewRequest.email = email;
